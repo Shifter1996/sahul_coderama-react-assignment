@@ -1,0 +1,110 @@
+swagger: "2.0"
+info:
+  description: "This API requires authorization; you can obtain a free key here: [http://omdbapi.com/apikey.aspx](http://omdbapi.com/apikey.aspx)"
+  version: "1.0"
+  title: "OMDb API"
+  termsOfService: "http://omdbapi.com/legal.htm"
+  contact:
+    email: "bfritz@fadingsignal.com"
+  license:
+    name: "CC BY-NC 4.0"
+    url: "https://creativecommons.org/licenses/by-nc/4.0/"
+host: "omdbapi.com"
+basePath: "/"
+tags:
+  - name: "Title Parameter"
+    description: "e.g., ?t=title"
+  - name: "ID Parameter"
+    description: "e.g., ?i=tt0000001"
+  - name: "Search Parameter"
+    description: "e.g., ?s=title"
+schemes:
+  - "http"
+  - "https"
+security:
+  - APIKeyQueryParam: []
+paths:
+  /:
+    get:
+      tags:
+        - "Title Parameter"
+        - "ID Parameter"
+        - "Search Parameter"
+      summary: "Fetches movie or series information based on title, IMDb ID, or search query"
+      operationId: "fetchByParameters"
+      parameters:
+        - name: "t"
+          in: "query"
+          description: "Title of the movie or series"
+          required: false
+          type: "string"
+        - name: "i"
+          in: "query"
+          description: "A valid IMDb ID (e.g., tt0000001)"
+          required: false
+          type: "string"
+        - name: "s"
+          in: "query"
+          description: "Search term for the title of the movie or series"
+          required: false
+          type: "string"
+        - name: "y"
+          in: "query"
+          description: "Year of release"
+          required: false
+          type: "integer"
+        - name: "type"
+          in: "query"
+          description: "Type of result to return"
+          required: false
+          type: "string"
+          enum:
+            - "movie"
+            - "series"
+            - "episode"
+        - name: "plot"
+          in: "query"
+          description: "Plot summary length"
+          required: false
+          type: "string"
+          enum:
+            - "short"
+            - "full"
+        - name: "r"
+          in: "query"
+          description: "Response format"
+          required: false
+          type: "string"
+          enum:
+            - "json"
+            - "xml"
+        - name: "page"
+          in: "query"
+          description: "Page number for search results"
+          required: false
+          type: "integer"
+        - name: "callback"
+          in: "query"
+          description: "JSONP callback name"
+          required: false
+          type: "string"
+        - name: "v"
+          in: "query"
+          description: "API version (reserved for future use)"
+          required: false
+          type: "integer"
+      responses:
+        "200":
+          description: "Successful operation"
+        "401":
+          description: "Not authenticated"
+      security:
+        - APIKeyQueryParam: []
+securityDefinitions:
+  APIKeyQueryParam:
+    type: "apiKey"
+    name: "apikey"
+    in: "query"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
